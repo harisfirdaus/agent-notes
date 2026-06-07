@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AlertCircle, CheckCircle2, MoreVertical, RefreshCw, Save } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  MoreVertical,
+  PanelLeftClose,
+  PanelLeftOpen,
+  RefreshCw,
+  Save
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NoteFormProps = {
@@ -15,6 +23,8 @@ type NoteFormProps = {
   };
   mode?: "new" | "edit";
   noteId?: string;
+  isSidebarOpen?: boolean;
+  onToggleSidebar?: () => void;
 };
 
 type SaveStatus = "saved" | "saving" | "unsaved" | "local" | "error";
@@ -79,7 +89,9 @@ export function NoteForm({
   submitLabel,
   defaultValues,
   mode = "new",
-  noteId
+  noteId,
+  isSidebarOpen,
+  onToggleSidebar
 }: NoteFormProps) {
   const [title, setTitle] = useState(defaultValues?.title ?? "");
   const [content, setContent] = useState(defaultValues?.content ?? "");
@@ -273,7 +285,17 @@ export function NoteForm({
       className="flex min-h-dvh flex-col bg-background"
     >
       <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
-        <div className="flex min-h-20 items-center gap-4 px-5 lg:px-8">
+        <div className="mx-auto flex min-h-20 w-full max-w-5xl items-center gap-4 px-5 lg:px-8">
+          {onToggleSidebar ? (
+            <button
+              type="button"
+              onClick={onToggleSidebar}
+              className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-white text-ink-muted shadow-paper hover:text-primary lg:flex"
+              aria-label={isSidebarOpen ? "Hide sidebar" : "Show sidebar"}
+            >
+              {isSidebarOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
+            </button>
+          ) : null}
           <label className="min-w-0 flex-1">
             <span className="sr-only">Note title</span>
             <input
@@ -316,8 +338,8 @@ export function NoteForm({
             <MoreVertical className="h-5 w-5" />
           </button>
         </div>
-        <div className="px-5 pb-4 lg:px-8">
-          <label className="block max-w-5xl">
+        <div className="mx-auto w-full max-w-5xl px-5 pb-4 lg:px-8">
+          <label className="block">
             <span className="sr-only">Tags</span>
             <input
               name="tags"
@@ -330,7 +352,7 @@ export function NoteForm({
         </div>
       </header>
 
-      <main className="flex flex-1 flex-col px-5 py-5 lg:px-8">
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-5 lg:px-8">
         <label className="flex flex-1 flex-col">
           <span className="sr-only">Markdown content</span>
           <textarea
