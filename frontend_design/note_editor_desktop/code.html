@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgentNotes | Markdown Editor</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .markdown-preview h1 { font-family: 'Hanken Grotesk', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: #1b1b1b; }
+        .markdown-preview h2 { font-family: 'Hanken Grotesk', sans-serif; font-size: 1.5rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1b1b1b; }
+        .markdown-preview p { font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; color: #414750; }
+        .markdown-preview code { font-family: 'JetBrains Mono', monospace; background: #eeeeee; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        .markdown-preview ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .markdown-preview blockquote { border-left: 4px solid #004173; padding-left: 1rem; font-style: italic; color: #727781; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e2e2e2; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c1c7d2; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#00497f",
+                        "surface": "#f9f9f9",
+                        "primary-container": "#00599a",
+                        "secondary-fixed": "#ffe085",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#231b00",
+                        "secondary-container": "#fdd031",
+                        "surface-container": "#eeeeee",
+                        "on-primary-fixed": "#001c37",
+                        "tertiary-fixed": "#ffdcc7",
+                        "on-surface": "#1b1b1b",
+                        "tertiary": "#683000",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#8b4301",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-primary-container": "#acd0ff",
+                        "inverse-primary": "#a0c9ff",
+                        "on-background": "#1b1b1b",
+                        "secondary": "#735c00",
+                        "on-secondary-container": "#6f5900",
+                        "on-tertiary-container": "#ffc097",
+                        "surface-container-highest": "#e2e2e2",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c1c7d2",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#414750",
+                        "tertiary-fixed-dim": "#ffb787",
+                        "on-tertiary-fixed-variant": "#733600",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-fixed": "#311300",
+                        "surface-variant": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d2e4ff",
+                        "primary": "#004173",
+                        "surface-container-high": "#e8e8e8",
+                        "inverse-surface": "#303030",
+                        "outline": "#727781",
+                        "secondary-fixed-dim": "#edc220",
+                        "on-secondary-fixed-variant": "#574500",
+                        "surface-tint": "#1461a2",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#a0c9ff",
+                        "surface-dim": "#dadada"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "container-max": "1200px",
+                        "xl": "48px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "display": ["Hanken Grotesk"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-sm": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden">
+<!-- Top Navigation Bar (Shared Component Reference) -->
+<header class="fixed top-0 left-0 right-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center w-full px-lg py-md">
+<div class="flex items-center gap-md">
+<span class="font-display text-headline-md font-bold text-primary">AgentNotes</span>
+<div class="h-6 w-[1px] bg-outline-variant mx-2"></div>
+<span class="font-label-md text-on-surface-variant">Precision Workspace / New Note</span>
+</div>
+<div class="flex items-center gap-lg">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">sync</span>
+<span class="pl-10 pr-4 py-1.5 text-label-sm font-label-md bg-surface-container-low rounded-full text-on-surface-variant">SYNCHRONIZED</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">more_vert</button>
+</div>
+</header>
+<div class="flex h-screen pt-[64px]">
+<!-- Left SideNavBar (Shared Component) -->
+<nav class="hidden md:flex flex-col h-full w-sidebar-width bg-surface-container-low border-r border-outline-variant py-lg px-md space-y-lg flex-shrink-0">
+<div class="flex flex-col space-y-md">
+<button class="flex items-center gap-md px-md py-sm transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined">inbox</span>
+<span class="font-label-md text-label-md">Inbox</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm transition-all duration-300 ease-in-out text-primary font-bold border-r-2 border-primary bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label-md text-label-md">Notes</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined">mic</span>
+<span class="font-label-md text-label-md">Capture</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined">label</span>
+<span class="font-label-md text-label-md">Tags</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</button>
+</div>
+<div class="mt-auto flex flex-col space-y-md pt-lg border-t border-outline-variant/30">
+<button class="flex items-center gap-md px-md py-sm transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm transition-all duration-300 ease-in-out text-on-surface-variant hover:bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined">archive</span>
+<span class="font-label-md text-label-md">Archive</span>
+</button>
+</div>
+</nav>
+<!-- Main Workspace (Editor + Preview) -->
+<main class="flex-grow flex bg-surface">
+<!-- Markdown Editor Side -->
+<section class="flex-1 flex flex-col border-r border-outline-variant">
+<div class="p-lg space-y-md flex-grow flex flex-col">
+<input class="w-full bg-transparent border-none focus:ring-0 font-display text-headline-lg placeholder:text-outline p-0" placeholder="Note Title" type="text" value="Strategic Architecture Planning 2024"/>
+<textarea class="w-full flex-grow bg-transparent border-none focus:ring-0 font-label-md text-body-md placeholder:text-outline p-0 resize-none leading-relaxed" id="markdown-input" spellcheck="false"># Strategic Architecture Planning 2024
+
+Our primary focus for Q3 is the **migration of legacy microservices** to the new unified API gateway. 
+
+## Key Objectives
+- Reduce latency by 40%
+- Implement zero-trust security layers
+- Standardize data schemas across "AgentNotes" modules
+
+&gt; The intersection of human cognitive speed and machine precision is our North Star.</textarea></div></section></main></div></body></html>

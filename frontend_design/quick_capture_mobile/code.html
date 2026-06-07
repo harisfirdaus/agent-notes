@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgentNotes - Quick Capture</title>
+<!-- Google Fonts: Hanken Grotesk, Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,600;0,700;1,400&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config Verbatim -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#00497f",
+                    "surface": "#f9f9f9",
+                    "primary-container": "#00599a",
+                    "secondary-fixed": "#ffe085",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#231b00",
+                    "secondary-container": "#fdd031",
+                    "surface-container": "#eeeeee",
+                    "on-primary-fixed": "#001c37",
+                    "tertiary-fixed": "#ffdcc7",
+                    "on-surface": "#1b1b1b",
+                    "tertiary": "#683000",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f9f9f9",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#8b4301",
+                    "inverse-on-surface": "#f1f1f1",
+                    "on-primary-container": "#acd0ff",
+                    "inverse-primary": "#a0c9ff",
+                    "on-background": "#1b1b1b",
+                    "secondary": "#735c00",
+                    "on-secondary-container": "#6f5900",
+                    "on-tertiary-container": "#ffc097",
+                    "surface-container-highest": "#e2e2e2",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#c1c7d2",
+                    "surface-bright": "#f9f9f9",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#414750",
+                    "tertiary-fixed-dim": "#ffb787",
+                    "on-tertiary-fixed-variant": "#733600",
+                    "surface-container-low": "#f3f3f3",
+                    "on-tertiary-fixed": "#311300",
+                    "surface-variant": "#e2e2e2",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#d2e4ff",
+                    "primary": "#004173",
+                    "surface-container-high": "#e8e8e8",
+                    "inverse-surface": "#303030",
+                    "outline": "#727781",
+                    "secondary-fixed-dim": "#edc220",
+                    "on-secondary-fixed-variant": "#574500",
+                    "surface-tint": "#1461a2",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#a0c9ff",
+                    "surface-dim": "#dadada"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "container-max": "1200px",
+                    "xl": "48px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "sidebar-width": "280px"
+            },
+            "fontFamily": {
+                    "display": ["Hanken Grotesk"],
+                    "label-md": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-sm": ["JetBrains Mono"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-sm": ["10px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .capture-textarea::placeholder {
+            color: #727781;
+            opacity: 0.5;
+        }
+        .capture-textarea:focus {
+            outline: none;
+        }
+        body {
+            background-color: #f9f9f9;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- Header / Branding Anchor (Hidden on Mobile, simplified for focused capture) -->
+<header class="hidden md:flex justify-between items-center w-full px-lg py-md max-w-container-max mx-auto border-b border-outline-variant bg-surface sticky top-0 z-50">
+<div class="font-display text-headline-md font-bold text-primary">AgentNotes</div>
+<div class="flex items-center gap-md">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Focus Mode</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+</div>
+</header>
+<!-- Main Capture Canvas -->
+<main class="min-h-screen flex flex-col max-w-container-max mx-auto px-md md:px-lg pb-xl pt-md md:pt-xl relative">
+<!-- Focus Area -->
+<div class="flex-grow flex flex-col">
+<!-- Hint Text -->
+<div class="mb-lg animate-fade-in">
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                    Captures go to Inbox and can be organized later.
+                </p>
+</div>
+<!-- Full-screen Textarea -->
+<div class="flex-grow">
+<textarea autofocus="" class="capture-textarea w-full h-full min-h-[353px] bg-transparent border-none p-0 font-headline-lg text-headline-lg md:text-display md:font-display text-on-surface placeholder:font-display resize-none transition-all duration-300" id="captureInput" placeholder="Write a quick capture..."></textarea>
+</div>
+</div>
+<!-- Meta Inputs (Tags & Space) -->
+<div class="mt-xl space-y-md border-t border-outline-variant pt-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Space Input -->
+<div class="group">
+<label class="font-label-md text-label-md text-on-surface-variant block mb-xs uppercase">Space</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-md text-outline">folder_open</span>
+<select class="w-full pl-xl pr-md py-md bg-surface-container-low border border-outline-variant rounded-xl appearance-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md text-on-surface">
+<option>Inbox (Default)</option>
+<option>Projects</option>
+<option>Personal</option>
+<option>Archive</option>
+</select>
+<span class="material-symbols-outlined absolute right-md pointer-events-none text-outline">expand_more</span>
+</div>
+</div>
+<!-- Tags Input -->
+<div class="group">
+<label class="font-label-md text-label-md text-on-surface-variant block mb-xs uppercase">Tags</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-md text-outline">label</span>
+<input class="w-full pl-xl pr-md py-md bg-surface-container-low border border-outline-variant rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md text-on-surface" placeholder="Add tags separated by comma..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Quick Access Chips -->
+<div class="flex flex-wrap gap-sm pt-sm">
+<button class="px-md py-xs rounded-full border border-outline-variant text-label-sm font-label-sm hover:bg-surface-container transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                    Recent: #work
+                </button>
+<button class="px-md py-xs rounded-full border border-outline-variant text-label-sm font-label-sm hover:bg-surface-container transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                    Recent: #ideas
+                </button>
+<button class="px-md py-xs rounded-full border border-outline-variant text-label-sm font-label-sm hover:bg-surface-container transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">add</span>
+                    New Tag
+                </button>
+</div>
+</div>
+<!-- Sticky Bottom Actions -->
+<div class="mt-xl flex flex-col-reverse md:flex-row items-center justify-between gap-md md:gap-lg py-md bg-surface/80 backdrop-blur-sm sticky bottom-0 border-t border-outline-variant md:border-none">
+<div class="flex items-center gap-md w-full md:w-auto">
+<button class="flex-1 md:flex-none px-xl py-md font-label-md text-label-md uppercase tracking-wider border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container transition-all" onclick="window.history.back()">
+                    Cancel
+                </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-sm px-xl py-md font-label-md text-label-md uppercase tracking-wider bg-primary text-on-primary rounded-lg hover:shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-weight="fill">save</span>
+                    Save Capture
+                </button>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-sm text-outline">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+<span class="material-symbols-outlined text-[20px]">image</span>
+<span class="material-symbols-outlined text-[20px]">attach_file</span>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant hidden md:block"></div>
+<div class="hidden md:flex items-center gap-sm">
+<kbd class="px-sm py-[2px] bg-surface-container-high rounded border border-outline-variant text-[10px] font-label-sm">⌘</kbd>
+<kbd class="px-sm py-[2px] bg-surface-container-high rounded border border-outline-variant text-[10px] font-label-sm">ENTER</kbd>
+<span class="text-label-sm font-label-sm text-on-surface-variant">to save</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Atmospheric Effect: Subtle Grain or Tonal Shift (Vanilla JS) -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[100]" id="noiseOverlay"></div>
+<script>
+        // Simple visual polish: noise texture overlay
+        const noise = document.getElementById('noiseOverlay');
+        // This simulates a very soft digital grain for the 'calm authority' editorial feel
+        noise.style.backgroundImage = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
+
+        // Keyboard Shortcut listener for saving
+        document.addEventListener('keydown', function(e) {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                alert('Capturing note...');
+                // Trigger save logic here
+            }
+            if (e.key === 'Escape') {
+                window.history.back();
+            }
+        });
+
+        // Auto-expand textarea (optional, but good for UX)
+        const tx = document.getElementById('captureInput');
+        tx.addEventListener("input", OnInput, false);
+        function OnInput() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + "px";
+        }
+    </script>
+</body></html>

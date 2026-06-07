@@ -1,0 +1,10 @@
+-- This combined file was intentionally retired to avoid copy-paste drift.
+--
+-- Run these files in Supabase SQL Editor instead:
+--
+-- 1. supabase/01_schema.sql
+-- 2. supabase/02_rls_policies.sql
+--
+-- Do not use an older combined SQL script if it contains inline references like:
+-- created_by_agent_key_id uuid references public.agent_keys(id) on delete set null
+-- updated_by_agent_key_id uuid references public.agent_keys(id) on delete set null

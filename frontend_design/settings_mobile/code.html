@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgentNotes - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#00497f",
+                        "surface": "#f9f9f9",
+                        "primary-container": "#00599a",
+                        "secondary-fixed": "#ffe085",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#231b00",
+                        "secondary-container": "#fdd031",
+                        "surface-container": "#eeeeee",
+                        "on-primary-fixed": "#001c37",
+                        "tertiary-fixed": "#ffdcc7",
+                        "on-surface": "#1b1b1b",
+                        "tertiary": "#683000",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#8b4301",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-primary-container": "#acd0ff",
+                        "inverse-primary": "#a0c9ff",
+                        "on-background": "#1b1b1b",
+                        "secondary": "#735c00",
+                        "on-secondary-container": "#6f5900",
+                        "on-tertiary-container": "#ffc097",
+                        "surface-container-highest": "#e2e2e2",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c1c7d2",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#414750",
+                        "tertiary-fixed-dim": "#ffb787",
+                        "on-tertiary-fixed-variant": "#733600",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-fixed": "#311300",
+                        "surface-variant": "#e2e2e2",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d2e4ff",
+                        "primary": "#004173",
+                        "surface-container-high": "#e8e8e8",
+                        "inverse-surface": "#303030",
+                        "outline": "#727781",
+                        "secondary-fixed-dim": "#edc220",
+                        "on-secondary-fixed-variant": "#574500",
+                        "surface-tint": "#1461a2",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#a0c9ff",
+                        "surface-dim": "#dadada"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "container-max": "1200px",
+                        "xl": "48px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "display": ["Hanken Grotesk"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "label-sm": ["10px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen">
+<!-- Top AppBar (Mobile Style) -->
+<header class="bg-surface docked full-width top-0 border-b border-outline-variant z-40 sticky">
+<div class="flex justify-between items-center w-full px-md py-md max-w-container-max mx-auto">
+<h1 class="font-headline-md text-headline-md text-on-surface">Settings</h1>
+<div class="flex items-center gap-md">
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined" data-icon="sync">sync</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pb-24 pt-4 px-md max-w-md mx-auto">
+<!-- User Profile Quick View -->
+<section class="mb-xl flex items-center gap-md p-md bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.04)]">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img alt="User" class="w-full h-full object-cover" data-alt="A professional headshot of a person with a friendly expression, set against a minimalist clean gray background. The lighting is soft and high-key, aligning with the light-mode minimalist-editorial aesthetic of the digital workspace. The overall mood is professional, calm, and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABpNXuKjf6HUQLNeAn4-M-RhrytzLV3Y3qVEp0ugW5QhBluXji-MFnf8J9oaidWOUW2ddE6iCAZp5WphxnAQ2-pjrEPwWaDb05c9zjxfNAG2hLxo33bHcY8xAizYSEK7rle4ijQv94MWMOZJUEMh3EjPpZvoSRu1ZkARvDkBPp_d5gyz26Tj2ZBQjxYaPxFaarL7qTwFwoTVUEiJedn03-qGoJKo0stwpd1YMu909O3if2k_xHaiZxQjlCX3o9XvLg4KEjQ-TwZgU"/>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md">Alex Rivera</h2>
+<p class="font-body-sm text-on-surface-variant">alex.rivera@agentnotes.com</p>
+</div>
+</section>
+<!-- General Settings List -->
+<nav class="space-y-sm mb-xl">
+<h3 class="font-label-md text-label-md text-on-surface-variant px-md uppercase mb-sm">Preferences</h3>
+<a class="flex items-center justify-between p-md bg-surface-container-lowest rounded-xl border border-transparent hover:border-outline-variant transition-all duration-200" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
+<span class="font-body-md">Account</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-md bg-surface-container-lowest rounded-xl border border-transparent hover:border-outline-variant transition-all duration-200" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="smart_toy">smart_toy</span>
+<span class="font-body-md">Agent Access</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-md bg-surface-container-lowest rounded-xl border border-transparent hover:border-outline-variant transition-all duration-200" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+<span class="font-body-md">Activity Log</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-md bg-surface-container-lowest rounded-xl border border-transparent hover:border-outline-variant transition-all duration-200" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="file_export">file_export</span>
+<span class="font-body-md">Export Data</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-xl border border-transparent">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="palette">palette</span>
+<span class="font-body-md">Theme</span>
+</div>
+<div class="flex items-center gap-xs bg-surface-container p-1 rounded-full">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="light_mode">light_mode</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="dark_mode">dark_mode</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Danger Zone -->
+<section class="mb-xl">
+<h3 class="font-label-md text-label-md text-error px-md uppercase mb-sm">Danger Zone</h3>
+<button class="w-full flex items-center justify-between p-md bg-error-container/20 rounded-xl border border-error/10 hover:bg-error-container/30 transition-all duration-200 group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-error" data-icon="delete_forever">delete_forever</span>
+<span class="font-body-md text-error font-semibold">Delete Account</span>
+</div>
+<span class="material-symbols-outlined text-error opacity-50 group-hover:opacity-100" data-icon="warning">warning</span>
+</button>
+</section>
+<!-- Logout Button -->
+<div class="mt-xl">
+<button class="w-full py-md px-lg bg-on-surface text-surface rounded-lg font-label-md uppercase tracking-wider flex items-center justify-center gap-md transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </button>
+<p class="mt-md text-center font-label-sm text-on-surface-variant uppercase tracking-widest">Version 2.4.0-Stable</p>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Shared Component) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-[64px] bg-surface/90 backdrop-blur-md border-t border-outline-variant shadow-sm">
+<button class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-100 active:scale-90">
+<span class="material-symbols-outlined" data-icon="inbox">inbox</span>
+<span class="font-label-sm text-label-sm mt-1">Inbox</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-100 active:scale-90">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm mt-1">Notes</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary-container transition-transform duration-100 active:scale-90 -mt-6">
+<div class="bg-primary p-3 rounded-full shadow-lg text-on-primary">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</div>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-100 active:scale-90">
+<span class="material-symbols-outlined" data-icon="label">label</span>
+<span class="font-label-sm text-label-sm mt-1">Tags</span>
+</button>
+<!-- ACTIVE STATE: Settings -->
+<button class="flex flex-col items-center justify-center text-primary font-bold transition-transform duration-100 active:scale-90">
+<span class="material-symbols-outlined fill-icon" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-sm text-label-sm mt-1">Settings</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for list items
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('touchstart', () => {
+                el.classList.add('opacity-80');
+            });
+            el.addEventListener('touchend', () => {
+                el.classList.remove('opacity-80');
+            });
+        });
+    </script>
+</body></html>
