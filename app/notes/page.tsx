@@ -65,7 +65,7 @@ export default async function NotesPage() {
   return (
     <AppShell>
       <TopBar title="Notes" searchPlaceholder="Search across all notes..." />
-      <div className="grid lg:grid-cols-[1fr_300px]">
+      <div className="grid min-h-[calc(100dvh-5rem)] lg:grid-cols-[1fr_300px]">
         <section className="px-5 py-8 lg:px-12">
           <div className="mb-10 flex flex-wrap items-center gap-3">
             <FilterChip active>All Notes</FilterChip>
@@ -114,7 +114,7 @@ export default async function NotesPage() {
           )}
         </section>
 
-        <aside className="hidden min-h-[calc(100dvh-5rem)] border-l border-border px-7 py-8 lg:block">
+        <aside className="hidden self-stretch border-l border-border px-7 py-8 lg:block">
           <section className="mb-12">
             <h2 className="mono-label mb-6 text-lg tracking-[0.25em]">Workspace Spaces</h2>
             <div className="space-y-5">

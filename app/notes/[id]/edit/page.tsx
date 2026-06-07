@@ -44,6 +44,7 @@ export default async function EditNotePage({ params }: EditNotePageProps) {
         action={updateNote.bind(null, id)}
         submitLabel="Save Changes"
         mode="edit"
+        noteId={id}
         defaultValues={{
           title: note.title,
           content: note.content,

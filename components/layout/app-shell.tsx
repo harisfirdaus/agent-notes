@@ -9,7 +9,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-dvh bg-background text-ink">
       <div className="flex min-h-dvh items-stretch">
         <AppSidebar profile={profile} />
-        <main className="min-h-screen flex-1 pb-24 lg:pb-0">{children}</main>
+        <main className="min-h-dvh flex-1 pb-24 lg:pb-0">{children}</main>
       </div>
       <MobileNav />
     </div>
