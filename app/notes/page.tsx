@@ -114,7 +114,7 @@ export default async function NotesPage() {
           )}
         </section>
 
-        <aside className="hidden border-l border-border px-7 py-8 lg:block">
+        <aside className="hidden min-h-[calc(100dvh-5rem)] border-l border-border px-7 py-8 lg:block">
           <section className="mb-12">
             <h2 className="mono-label mb-6 text-lg tracking-[0.25em]">Workspace Spaces</h2>
             <div className="space-y-5">

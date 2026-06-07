@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { AppShell } from "@/components/layout/app-shell";
-import { TopBar } from "@/components/layout/top-bar";
 import { NoteForm } from "@/components/notes/note-form";
 import { createClient } from "@/lib/supabase/server";
 import { updateNote } from "../../actions";
@@ -26,15 +25,29 @@ export default async function EditNotePage({ params }: EditNotePageProps) {
     notFound();
   }
 
+  const { data: noteTags } = await supabase
+    .from("note_tags")
+    .select("tags(name)")
+    .eq("note_id", id);
+
+  const tags =
+    noteTags
+      ?.map((row) => {
+        const tag = Array.isArray(row.tags) ? row.tags[0] : row.tags;
+        return tag?.name;
+      })
+      .filter((name): name is string => Boolean(name)) ?? [];
+
   return (
     <AppShell>
-      <TopBar title="Edit Note" />
       <NoteForm
         action={updateNote.bind(null, id)}
         submitLabel="Save Changes"
+        mode="edit"
         defaultValues={{
           title: note.title,
-          content: note.content
+          content: note.content,
+          tags
         }}
       />
     </AppShell>

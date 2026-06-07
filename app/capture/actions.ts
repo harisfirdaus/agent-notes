@@ -41,3 +41,41 @@ export async function createCapture(formData: FormData) {
   revalidatePath("/inbox");
   redirect("/inbox");
 }
+
+export async function updateCapture(captureId: string, formData: FormData) {
+  const contentValue = formData.get("content");
+  const content = typeof contentValue === "string" ? contentValue.trim() : "";
+
+  if (!content) {
+    throw new Error("Capture content is required.");
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    redirect("/login");
+  }
+
+  const { error } = await supabase
+    .from("notes")
+    .update({
+      content,
+      content_format: "plain",
+      updated_by: "user"
+    })
+    .eq("id", captureId)
+    .eq("type", "capture")
+    .neq("status", "deleted");
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/inbox");
+  revalidatePath(`/capture/${captureId}/edit`);
+  redirect("/inbox");
+}

@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
 type LogoutButtonProps = {
   className?: string;
   iconClassName?: string;
+  variant?: "solid" | "subtle";
 };
 
-export function LogoutButton({ className, iconClassName }: LogoutButtonProps) {
+export function LogoutButton({ className, iconClassName, variant = "solid" }: LogoutButtonProps) {
   const router = useRouter();
 
   async function handleLogout() {
@@ -24,7 +25,11 @@ export function LogoutButton({ className, iconClassName }: LogoutButtonProps) {
     <button
       onClick={handleLogout}
       className={cn(
-        "mono-label mt-10 flex h-16 w-full items-center justify-center gap-3 rounded-lg bg-ink text-lg text-white",
+        "mono-label flex w-full items-center justify-center gap-3 rounded-lg transition-colors",
+        variant === "solid" &&
+          "mt-10 h-16 bg-ink text-lg text-white hover:bg-primary",
+        variant === "subtle" &&
+          "h-10 border border-border bg-white text-xs text-ink-muted hover:border-danger hover:bg-red-50 hover:text-danger",
         className
       )}
     >

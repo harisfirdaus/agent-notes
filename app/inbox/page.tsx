@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Archive, Plus, Trash2 } from "lucide-react";
+import { Archive, Pencil, Plus, Trash2 } from "lucide-react";
 import { AppShell } from "@/components/layout/app-shell";
 import { TopBar } from "@/components/layout/top-bar";
 import { FilterChip } from "@/components/ui/filter-chip";
@@ -86,6 +86,13 @@ export default async function InboxPage() {
                 <div className="flex items-center justify-between gap-3 border-t border-border pt-4">
                   <span className="font-mono text-xs text-ink-muted">{formatTime(item.updated_at)}</span>
                   <div className="flex items-center gap-1">
+                    <Link
+                      href={item.type === "capture" ? `/capture/${item.id}/edit` : `/notes/${item.id}/edit`}
+                      aria-label="Edit item"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-muted hover:bg-surface-dim hover:text-primary"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Link>
                     <form action={archiveInboxItem.bind(null, item.id)}>
                       <button
                         type="submit"

@@ -16,7 +16,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden h-screen w-[280px] shrink-0 border-r border-border bg-surface-muted px-5 py-6 lg:flex lg:flex-col">
+    <aside className="sticky top-0 hidden h-dvh w-[280px] shrink-0 border-r border-border bg-surface-muted px-5 py-6 lg:flex lg:flex-col">
       <Link href="/notes" className="mb-9 flex items-center gap-4">
         <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-white">
           <Sparkles className="h-5 w-5" />
@@ -81,7 +81,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
             <p className="truncate text-xs text-ink-muted">{profile.email}</p>
           </div>
         </div>
-        <LogoutButton className="mt-4 h-10 rounded-lg border border-border bg-white text-xs text-ink-muted hover:border-danger hover:text-danger" iconClassName="h-4 w-4" />
+        <LogoutButton variant="subtle" className="mt-4" iconClassName="h-4 w-4" />
       </div>
     </aside>
   );
