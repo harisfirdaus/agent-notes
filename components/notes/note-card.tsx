@@ -40,7 +40,7 @@ export function NoteCard({
         </span>
         {pinned ? <Pin className="h-4 w-4 text-gold" /> : null}
       </div>
-      <Link href={`/notes/${id}/edit`}>
+      <Link href={`/notes/${id}/edit`} prefetch={false}>
         <h2 className="mb-4 font-display text-xl font-semibold leading-snug group-hover:text-primary">
           {title}
         </h2>
@@ -67,6 +67,7 @@ export function NoteCard({
         <div className="flex items-center gap-1">
           <Link
             href={`/notes/${id}/edit`}
+            prefetch={false}
             aria-label={`Edit ${title}`}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-muted hover:bg-surface-dim hover:text-primary"
           >

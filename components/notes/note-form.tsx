@@ -52,6 +52,10 @@ function makeSnapshot(title: string, content: string, tags: string) {
   });
 }
 
+function makeTagsSnapshot(tags: string) {
+  return JSON.stringify(parseTags(tags));
+}
+
 function statusLabel(status: SaveStatus, hasRemoteAutosave: boolean) {
   if (!hasRemoteAutosave && status === "local") {
     return "Draft saved locally";
@@ -104,7 +108,9 @@ export function NoteForm({
   );
   const lastRemoteSaveAt = useRef(Date.now());
   const lastRemoteSnapshot = useRef(makeSnapshot(title, content, tags));
+  const lastRemoteTagsSnapshot = useRef(makeTagsSnapshot(tags));
   const latestValues = useRef({ title, content, tags });
+  const flushInFlight = useRef(false);
   const didInitializeLocalDraft = useRef(false);
 
   useEffect(() => {
@@ -202,6 +208,8 @@ export function NoteForm({
       setStatus("saving");
 
       try {
+        const tagsSnapshot = makeTagsSnapshot(values.tags);
+        const tagsChanged = tagsSnapshot !== lastRemoteTagsSnapshot.current;
         const response = await fetch(`/api/notes/${noteId}/autosave`, {
           method: "PATCH",
           headers: {
@@ -210,7 +218,8 @@ export function NoteForm({
           body: JSON.stringify({
             title: values.title,
             content: values.content,
-            tags: parseTags(values.tags)
+            tags: tagsChanged ? parseTags(values.tags) : undefined,
+            tagsChanged
           })
         });
 
@@ -220,6 +229,7 @@ export function NoteForm({
 
         lastRemoteSaveAt.current = Date.now();
         lastRemoteSnapshot.current = snapshotBeforeSave;
+        lastRemoteTagsSnapshot.current = tagsSnapshot;
         window.localStorage.removeItem(draftKey);
         setStatus("saved");
       } catch {
@@ -239,12 +249,16 @@ export function NoteForm({
       const values = latestValues.current;
       const snapshot = makeSnapshot(values.title, values.content, values.tags);
 
-      if (snapshot === lastRemoteSnapshot.current) {
+      if (snapshot === lastRemoteSnapshot.current || flushInFlight.current) {
         return;
       }
 
+      flushInFlight.current = true;
+
       try {
-        await fetch(`/api/notes/${noteId}/autosave`, {
+        const tagsSnapshot = makeTagsSnapshot(values.tags);
+        const tagsChanged = tagsSnapshot !== lastRemoteTagsSnapshot.current;
+        const response = await fetch(`/api/notes/${noteId}/autosave`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json"
@@ -252,12 +266,24 @@ export function NoteForm({
           body: JSON.stringify({
             title: values.title,
             content: values.content,
-            tags: parseTags(values.tags)
+            tags: tagsChanged ? parseTags(values.tags) : undefined,
+            tagsChanged
           }),
           keepalive: true
         });
+
+        if (!response.ok) {
+          throw new Error("Autosave failed.");
+        }
+
+        lastRemoteSaveAt.current = Date.now();
+        lastRemoteSnapshot.current = snapshot;
+        lastRemoteTagsSnapshot.current = tagsSnapshot;
+        window.localStorage.removeItem(draftKey);
       } catch {
         // Local draft remains available if this final flush fails.
+      } finally {
+        flushInFlight.current = false;
       }
     }
 
@@ -274,7 +300,7 @@ export function NoteForm({
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("pagehide", flushAutosave);
     };
-  }, [noteId]);
+  }, [draftKey, noteId]);
 
   const StatusIcon = statusIcon(status);
 
@@ -326,6 +352,7 @@ export function NoteForm({
           </button>
           <Link
             href="/notes"
+            prefetch={false}
             className="mono-label hidden h-10 items-center justify-center rounded-lg border border-border bg-white px-4 text-ink-muted sm:flex"
           >
             Cancel

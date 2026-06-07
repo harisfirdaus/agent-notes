@@ -5,6 +5,7 @@ type AutosavePayload = {
   title?: string;
   content?: string;
   tags?: string[];
+  tagsChanged?: boolean;
 };
 
 function slugify(value: string) {
@@ -77,7 +78,8 @@ export async function PATCH(
 
   const title = payload.title?.trim() || "Untitled";
   const content = typeof payload.content === "string" ? payload.content : "";
-  const tags = Array.isArray(payload.tags) ? payload.tags : [];
+  const shouldSyncTags = payload.tagsChanged === true;
+  const tags = shouldSyncTags && Array.isArray(payload.tags) ? payload.tags : [];
 
   const { error } = await supabase
     .from("notes")
@@ -97,13 +99,15 @@ export async function PATCH(
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  try {
-    await syncNoteTags(supabase, user.id, id, tags);
-  } catch (syncError) {
-    return NextResponse.json(
-      { error: syncError instanceof Error ? syncError.message : "Failed to sync tags." },
-      { status: 400 }
-    );
+  if (shouldSyncTags) {
+    try {
+      await syncNoteTags(supabase, user.id, id, tags);
+    } catch (syncError) {
+      return NextResponse.json(
+        { error: syncError instanceof Error ? syncError.message : "Failed to sync tags." },
+        { status: 400 }
+      );
+    }
   }
 
   return NextResponse.json({ savedAt: new Date().toISOString() });

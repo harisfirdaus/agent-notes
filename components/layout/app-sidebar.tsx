@@ -17,7 +17,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
 
   return (
     <aside className="hidden min-h-dvh w-[280px] shrink-0 self-stretch border-r border-border bg-surface-muted px-5 py-6 lg:flex lg:flex-col">
-      <Link href="/notes" className="mb-9 flex items-center gap-4">
+      <Link href="/notes" prefetch={false} className="mb-9 flex items-center gap-4">
         <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-white">
           <Sparkles className="h-5 w-5" />
         </div>
@@ -29,6 +29,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
 
       <Link
         href="/notes/new"
+        prefetch={false}
         className="mono-label mb-7 flex h-12 items-center justify-center gap-3 rounded-lg bg-primary text-sm text-white shadow-paper"
       >
         <Plus className="h-5 w-5" />
@@ -44,6 +45,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={false}
               className={cn(
                 "flex h-12 items-center gap-4 rounded-lg px-5 text-lg text-ink-muted transition-colors",
                 active && "bg-surface-dim font-semibold text-primary ring-1 ring-primary/20"
@@ -64,6 +66,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch={false}
                 className="flex h-11 items-center gap-4 rounded-lg px-5 text-ink-muted transition-colors hover:bg-surface-dim"
               >
                 <Icon className="h-5 w-5" />

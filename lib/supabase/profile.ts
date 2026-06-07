@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import { createClient } from "./server";
 
 export type CurrentProfile = {
@@ -30,7 +31,7 @@ function deriveInitials(name: string, email: string) {
   return source.slice(0, 2).toUpperCase();
 }
 
-export async function getCurrentProfile(): Promise<CurrentProfile | null> {
+export const getCurrentProfile = cache(async (): Promise<CurrentProfile | null> => {
   const supabase = await createClient();
   const {
     data: { user },
@@ -56,7 +57,7 @@ export async function getCurrentProfile(): Promise<CurrentProfile | null> {
     displayName,
     initials: deriveInitials(displayName, email)
   };
-}
+});
 
 export async function requireCurrentProfile() {
   const profile = await getCurrentProfile();

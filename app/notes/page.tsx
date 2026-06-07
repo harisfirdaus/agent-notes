@@ -36,19 +36,23 @@ function makeExcerpt(content: string) {
 async function getNotesData() {
   const supabase = await createClient();
 
-  const [{ data: notes, error: notesError }, { data: tags }, { data: noteTags }] = await Promise.all([
-    supabase
-      .from("notes")
-      .select("id,title,content,status,updated_at,created_by")
-      .in("status", ["active", "inbox"])
-      .order("updated_at", { ascending: false }),
-    supabase.from("tags").select("id,name,slug").order("name").limit(10),
-    supabase.from("note_tags").select("note_id,tags(name,slug)")
-  ]);
+  const { data: notes, error: notesError } = await supabase
+    .from("notes")
+    .select("id,title,content,status,updated_at,created_by")
+    .in("status", ["active", "inbox"])
+    .order("updated_at", { ascending: false });
 
   if (notesError) {
     throw new Error(notesError.message);
   }
+
+  const noteIds = (notes ?? []).map((note) => note.id);
+  const [{ data: tags }, { data: noteTags }] = await Promise.all([
+    supabase.from("tags").select("id,name,slug").order("name").limit(10),
+    noteIds.length > 0
+      ? supabase.from("note_tags").select("note_id,tags(name,slug)").in("note_id", noteIds)
+      : Promise.resolve({ data: [] })
+  ]);
 
   const tagsByNote = new Map<string, string[]>();
 
@@ -112,7 +116,7 @@ export default async function NotesPage() {
           <section>
             <div className="mb-6 flex items-center justify-between">
               <h2 className="mono-label text-lg tracking-[0.25em]">Top Tags</h2>
-              <Link href="/tags" className="mono-label text-[10px] text-primary">
+              <Link href="/tags" prefetch={false} className="mono-label text-[10px] text-primary">
                 Manage
               </Link>
             </div>

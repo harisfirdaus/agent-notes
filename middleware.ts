@@ -4,7 +4,6 @@ import { updateSession } from "@/lib/supabase/middleware";
 const publicRoutes = ["/login", "/signup", "/auth/callback"];
 
 export async function middleware(request: NextRequest) {
-  const response = await updateSession(request);
   const { pathname } = request.nextUrl;
 
   const isPublicRoute = publicRoutes.some(
@@ -17,7 +16,7 @@ export async function middleware(request: NextRequest) {
     pathname.includes(".");
 
   if (isPublicRoute || isStaticAsset) {
-    return response;
+    return NextResponse.next();
   }
 
   const hasSupabaseCookies = request.cookies
@@ -31,9 +30,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  return response;
+  return updateSession(request);
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"]
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|map|txt|xml|json)$).*)"
+  ]
 };
