@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Plus, Sparkles } from "lucide-react";
+import { LogoutButton } from "@/components/auth/logout-button";
 import { cn } from "@/lib/utils";
 import type { CurrentProfile } from "@/lib/supabase/profile";
 import { primaryNavItems, secondaryNavItems } from "./navigation";
@@ -80,6 +81,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
             <p className="truncate text-xs text-ink-muted">{profile.email}</p>
           </div>
         </div>
+        <LogoutButton className="mt-4 h-10 rounded-lg border border-border bg-white text-xs text-ink-muted hover:border-danger hover:text-danger" iconClassName="h-4 w-4" />
       </div>
     </aside>
   );

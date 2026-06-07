@@ -3,8 +3,14 @@
 import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase/browser";
+import { cn } from "@/lib/utils";
 
-export function LogoutButton() {
+type LogoutButtonProps = {
+  className?: string;
+  iconClassName?: string;
+};
+
+export function LogoutButton({ className, iconClassName }: LogoutButtonProps) {
   const router = useRouter();
 
   async function handleLogout() {
@@ -17,9 +23,12 @@ export function LogoutButton() {
   return (
     <button
       onClick={handleLogout}
-      className="mono-label mt-10 flex h-16 w-full items-center justify-center gap-3 rounded-lg bg-ink text-lg text-white"
+      className={cn(
+        "mono-label mt-10 flex h-16 w-full items-center justify-center gap-3 rounded-lg bg-ink text-lg text-white",
+        className
+      )}
     >
-      <LogOut className="h-6 w-6" />
+      <LogOut className={cn("h-6 w-6", iconClassName)} />
       Logout
     </button>
   );
