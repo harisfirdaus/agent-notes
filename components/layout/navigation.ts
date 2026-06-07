@@ -1,5 +1,4 @@
 import {
-  Archive,
   CircleHelp,
   FileText,
   PlusCircle,
@@ -15,6 +14,5 @@ export const primaryNavItems = [
 ];
 
 export const secondaryNavItems = [
-  { href: "/help", label: "Help", icon: CircleHelp },
-  { href: "/archive", label: "Archive", icon: Archive }
+  { href: "/help", label: "Help", icon: CircleHelp }
 ];

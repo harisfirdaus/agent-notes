@@ -29,7 +29,7 @@ export function AppSidebar({ profile }: AppSidebarProps) {
 
       <Link
         href="/notes/new"
-        className="mono-label mb-8 flex h-14 items-center justify-center gap-3 rounded-lg bg-primary text-sm text-white shadow-paper"
+        className="mono-label mb-7 flex h-12 items-center justify-center gap-3 rounded-lg bg-primary text-sm text-white shadow-paper"
       >
         <Plus className="h-5 w-5" />
         New Note

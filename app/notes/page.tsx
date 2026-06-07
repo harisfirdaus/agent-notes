@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { Plus } from "lucide-react";
-import { FilterChip } from "@/components/ui/filter-chip";
 import { AppShell } from "@/components/layout/app-shell";
 import { NoteCard } from "@/components/notes/note-card";
 import { TopBar } from "@/components/layout/top-bar";
 import { createClient } from "@/lib/supabase/server";
-import { archiveNote, deleteNote } from "./actions";
+import { deleteNote } from "./actions";
 
 type NoteRow = {
   id: string;
@@ -38,13 +36,12 @@ function makeExcerpt(content: string) {
 async function getNotesData() {
   const supabase = await createClient();
 
-  const [{ data: notes, error: notesError }, { data: spaces }, { data: tags }, { data: noteTags }] = await Promise.all([
+  const [{ data: notes, error: notesError }, { data: tags }, { data: noteTags }] = await Promise.all([
     supabase
       .from("notes")
       .select("id,title,content,status,updated_at,created_by")
-      .neq("status", "deleted")
+      .in("status", ["active", "inbox"])
       .order("updated_at", { ascending: false }),
-    supabase.from("spaces").select("id,name").order("name"),
     supabase.from("tags").select("id,name,slug").order("name").limit(10),
     supabase.from("note_tags").select("note_id,tags(name,slug)")
   ]);
@@ -73,32 +70,18 @@ async function getNotesData() {
       ...note,
       tags: tagsByNote.get(note.id) ?? []
     })),
-    spaces: spaces ?? [],
     tags: tags ?? []
   };
 }
 
 export default async function NotesPage() {
-  const { notes, spaces, tags } = await getNotesData();
+  const { notes, tags } = await getNotesData();
 
   return (
     <AppShell>
       <TopBar title="Notes" searchPlaceholder="Search across all notes..." />
       <div className="grid min-h-dvh lg:grid-cols-[1fr_300px]">
         <section className="px-5 py-8 lg:px-12">
-          <div className="mb-10 flex flex-wrap items-center gap-3">
-            <FilterChip active>All Notes</FilterChip>
-            <FilterChip>Active</FilterChip>
-            <FilterChip>Archived</FilterChip>
-            <Link
-              href="/notes/new"
-              className="mono-label ml-auto flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-white"
-            >
-              <Plus className="h-4 w-4" />
-              New Note
-            </Link>
-          </div>
-
           {notes.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {notes.map((note) => (
@@ -111,7 +94,6 @@ export default async function NotesPage() {
                   status={note.status}
                   updatedAt={formatUpdatedAt(note.updated_at)}
                   agent={note.created_by === "agent"}
-                  archiveAction={archiveNote.bind(null, note.id)}
                   deleteAction={deleteNote.bind(null, note.id)}
                 />
               ))}
@@ -120,35 +102,13 @@ export default async function NotesPage() {
             <div className="rounded-2xl border border-dashed border-border bg-white px-6 py-16 text-center shadow-paper">
               <h2 className="font-display text-2xl font-semibold">No notes yet</h2>
               <p className="mx-auto mt-3 max-w-md text-ink-muted">
-                Create your first Markdown note. Captures, tags, and spaces can be connected next.
+                Create your first note from the sidebar or the mobile plus button.
               </p>
-              <Link
-                href="/notes/new"
-                className="mono-label mt-7 inline-flex h-12 items-center gap-2 rounded-lg bg-primary px-6 text-white"
-              >
-                <Plus className="h-4 w-4" />
-                New Note
-              </Link>
             </div>
           )}
         </section>
 
         <aside className="hidden min-h-dvh self-stretch border-l border-border px-7 py-8 lg:block">
-          <section className="mb-12">
-            <h2 className="mono-label mb-6 text-lg tracking-[0.25em]">Workspace Spaces</h2>
-            <div className="space-y-5">
-              {spaces.length > 0 ? (
-                spaces.map((space) => (
-                  <div key={space.id} className="flex items-center gap-3 text-sm">
-                    <span className="h-4 w-4 rounded border border-border bg-white" />
-                    <span>{space.name}</span>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-ink-muted">No spaces yet.</p>
-              )}
-            </div>
-          </section>
           <section>
             <div className="mb-6 flex items-center justify-between">
               <h2 className="mono-label text-lg tracking-[0.25em]">Top Tags</h2>

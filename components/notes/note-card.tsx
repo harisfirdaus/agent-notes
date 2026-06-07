@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Archive, Clock, Pencil, Pin, Trash2 } from "lucide-react";
+import { Clock, Pencil, Pin, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NoteCardProps = {
@@ -11,7 +11,6 @@ type NoteCardProps = {
   updatedAt: string;
   pinned?: boolean;
   agent?: boolean;
-  archiveAction?: (formData: FormData) => void | Promise<void>;
   deleteAction?: (formData: FormData) => void | Promise<void>;
 };
 
@@ -24,7 +23,6 @@ export function NoteCard({
   updatedAt,
   pinned,
   agent,
-  archiveAction,
   deleteAction
 }: NoteCardProps) {
   return (
@@ -74,17 +72,6 @@ export function NoteCard({
           >
             <Pencil className="h-4 w-4" />
           </Link>
-          {archiveAction ? (
-            <form action={archiveAction}>
-              <button
-                type="submit"
-                aria-label={`Archive ${title}`}
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-ink-muted hover:bg-surface-dim hover:text-primary"
-              >
-                <Archive className="h-4 w-4" />
-              </button>
-            </form>
-          ) : null}
           {deleteAction ? (
             <form action={deleteAction}>
               <button

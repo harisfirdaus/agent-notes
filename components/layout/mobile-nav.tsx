@@ -10,13 +10,13 @@ export function MobileNav() {
   const pathname = usePathname();
   const mobileItems = [
     ...primaryNavItems.filter((item) => item.href === "/notes"),
-    ...primaryNavItems.filter((item) => item.href === "/tags"),
     ...primaryNavItems.filter((item) => "primary" in item && item.primary),
+    ...primaryNavItems.filter((item) => item.href === "/tags"),
     ...primaryNavItems.filter((item) => item.href === "/settings")
   ];
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 grid h-20 grid-cols-5 border-t border-border bg-white/95 px-4 pb-3 pt-2 backdrop-blur lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 grid h-20 grid-cols-4 border-t border-border bg-white/95 px-4 pb-3 pt-2 backdrop-blur lg:hidden">
       {mobileItems.map((item) => {
         const Icon = item.icon;
         const active = pathname === item.href || pathname.startsWith(`${item.href}/`);

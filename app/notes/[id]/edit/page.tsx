@@ -38,7 +38,7 @@ export default async function EditNotePage({ params }: EditNotePageProps) {
       .filter((name): name is string => Boolean(name)) ?? [];
 
   return (
-    <AppShell>
+    <AppShell collapsibleSidebar>
       <NoteForm
         action={updateNote.bind(null, id)}
         submitLabel="Save Changes"

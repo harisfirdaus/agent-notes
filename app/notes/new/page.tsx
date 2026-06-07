@@ -4,7 +4,7 @@ import { createNote } from "../actions";
 
 export default function NewNotePage() {
   return (
-    <AppShell>
+    <AppShell collapsibleSidebar>
       <NoteForm action={createNote} submitLabel="Save Note" mode="new" />
     </AppShell>
   );
