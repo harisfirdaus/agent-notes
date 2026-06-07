@@ -17,7 +17,6 @@ export default async function EditNotePage({ params }: EditNotePageProps) {
     .from("notes")
     .select("id,title,content,type,status")
     .eq("id", id)
-    .eq("type", "note")
     .neq("status", "deleted")
     .maybeSingle();
 

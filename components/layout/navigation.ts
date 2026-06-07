@@ -2,16 +2,14 @@ import {
   Archive,
   CircleHelp,
   FileText,
-  Inbox,
-  Mic,
+  PlusCircle,
   Settings,
   Tag
 } from "lucide-react";
 
 export const primaryNavItems = [
-  { href: "/inbox", label: "Inbox", icon: Inbox },
   { href: "/notes", label: "Notes", icon: FileText },
-  { href: "/capture", label: "Capture", icon: Mic },
+  { href: "/notes/new", label: "New", icon: PlusCircle, primary: true },
   { href: "/tags", label: "Tags", icon: Tag },
   { href: "/settings", label: "Settings", icon: Settings }
 ];

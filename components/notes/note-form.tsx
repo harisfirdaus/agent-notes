@@ -100,6 +100,11 @@ export function NoteForm({
   }, [title, content, tags]);
 
   useEffect(() => {
+    if (!noteId) {
+      window.localStorage.removeItem(draftKey);
+      return;
+    }
+
     const savedDraft = window.localStorage.getItem(draftKey);
 
     if (!savedDraft) {
@@ -262,7 +267,11 @@ export function NoteForm({
   const StatusIcon = statusIcon(status);
 
   return (
-    <form action={action} className="flex min-h-dvh flex-col bg-background">
+    <form
+      action={action}
+      onSubmit={() => window.localStorage.removeItem(draftKey)}
+      className="flex min-h-dvh flex-col bg-background"
+    >
       <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
         <div className="flex min-h-20 items-center gap-4 px-5 lg:px-8">
           <label className="min-w-0 flex-1">

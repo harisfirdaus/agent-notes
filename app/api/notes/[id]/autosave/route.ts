@@ -82,6 +82,7 @@ export async function PATCH(
   const { error } = await supabase
     .from("notes")
     .update({
+      type: "note",
       title,
       content,
       content_format: "markdown",
@@ -90,7 +91,6 @@ export async function PATCH(
     })
     .eq("id", id)
     .eq("user_id", user.id)
-    .eq("type", "note")
     .neq("status", "deleted");
 
   if (error) {

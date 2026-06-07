@@ -7,7 +7,7 @@ type NoteCardProps = {
   title: string;
   excerpt: string;
   tags: string[];
-  status?: "active" | "archived";
+  status?: "inbox" | "active" | "archived";
   updatedAt: string;
   pinned?: boolean;
   agent?: boolean;
@@ -33,7 +33,9 @@ export function NoteCard({
         <span
           className={cn(
             "mono-label rounded-md px-2 py-1 text-[10px]",
-            status === "active" ? "bg-blue-50 text-primary" : "bg-surface-dim text-ink-muted"
+            status === "active" || status === "inbox"
+              ? "bg-blue-50 text-primary"
+              : "bg-surface-dim text-ink-muted"
           )}
         >
           {agent ? "Agent" : status}

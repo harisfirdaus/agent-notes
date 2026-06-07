@@ -11,9 +11,10 @@ type NoteRow = {
   id: string;
   title: string | null;
   content: string;
-  status: "active" | "archived";
+  status: "inbox" | "active" | "archived";
   updated_at: string;
   created_by: "user" | "agent";
+  tags: string[];
 };
 
 function formatUpdatedAt(value: string) {
@@ -37,23 +38,41 @@ function makeExcerpt(content: string) {
 async function getNotesData() {
   const supabase = await createClient();
 
-  const [{ data: notes, error: notesError }, { data: spaces }, { data: tags }] = await Promise.all([
+  const [{ data: notes, error: notesError }, { data: spaces }, { data: tags }, { data: noteTags }] = await Promise.all([
     supabase
       .from("notes")
       .select("id,title,content,status,updated_at,created_by")
-      .eq("type", "note")
-      .in("status", ["active", "archived"])
+      .neq("status", "deleted")
       .order("updated_at", { ascending: false }),
     supabase.from("spaces").select("id,name").order("name"),
-    supabase.from("tags").select("id,name,slug").order("name").limit(10)
+    supabase.from("tags").select("id,name,slug").order("name").limit(10),
+    supabase.from("note_tags").select("note_id,tags(name,slug)")
   ]);
 
   if (notesError) {
     throw new Error(notesError.message);
   }
 
+  const tagsByNote = new Map<string, string[]>();
+
+  for (const row of noteTags ?? []) {
+    const tag = Array.isArray(row.tags) ? row.tags[0] : row.tags;
+
+    if (!tag) {
+      continue;
+    }
+
+    const value = tag.slug || tag.name;
+    const currentTags = tagsByNote.get(row.note_id) ?? [];
+    currentTags.push(value);
+    tagsByNote.set(row.note_id, currentTags);
+  }
+
   return {
-    notes: (notes ?? []) as NoteRow[],
+    notes: ((notes ?? []) as Omit<NoteRow, "tags">[]).map((note) => ({
+      ...note,
+      tags: tagsByNote.get(note.id) ?? []
+    })),
     spaces: spaces ?? [],
     tags: tags ?? []
   };
@@ -65,7 +84,7 @@ export default async function NotesPage() {
   return (
     <AppShell>
       <TopBar title="Notes" searchPlaceholder="Search across all notes..." />
-      <div className="grid min-h-[calc(100dvh-5rem)] lg:grid-cols-[1fr_300px]">
+      <div className="grid min-h-dvh lg:grid-cols-[1fr_300px]">
         <section className="px-5 py-8 lg:px-12">
           <div className="mb-10 flex flex-wrap items-center gap-3">
             <FilterChip active>All Notes</FilterChip>
@@ -86,9 +105,9 @@ export default async function NotesPage() {
                 <NoteCard
                   key={note.id}
                   id={note.id}
-                  title={note.title ?? "Untitled note"}
+                  title={note.title ?? "Untitled"}
                   excerpt={makeExcerpt(note.content)}
-                  tags={[]}
+                  tags={note.tags}
                   status={note.status}
                   updatedAt={formatUpdatedAt(note.updated_at)}
                   agent={note.created_by === "agent"}
@@ -114,7 +133,7 @@ export default async function NotesPage() {
           )}
         </section>
 
-        <aside className="hidden self-stretch border-l border-border px-7 py-8 lg:block">
+        <aside className="hidden min-h-dvh self-stretch border-l border-border px-7 py-8 lg:block">
           <section className="mb-12">
             <h2 className="mono-label mb-6 text-lg tracking-[0.25em]">Workspace Spaces</h2>
             <div className="space-y-5">

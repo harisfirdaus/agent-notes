@@ -146,6 +146,7 @@ export async function updateNote(noteId: string, formData: FormData) {
   const { error } = await supabase
     .from("notes")
     .update({
+      type: "note",
       title,
       content,
       content_format: "markdown",
